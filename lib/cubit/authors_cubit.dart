@@ -4,5 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AuthorsCubit extends Cubit<List<Author>> {
   AuthorsCubit() : super([]);
 
-  void loadAuthors() {}
+  Author? selectedAuthor;
+
+  void loadAuthors(List<Author> authors) {
+    emit(authors);
+
+    if (authors.isNotEmpty) {
+      selectedAuthor = authors.first;
+    }
+  }
+
+  void selectAuthor(Author author) {
+    selectedAuthor = author;
+  }
 }
