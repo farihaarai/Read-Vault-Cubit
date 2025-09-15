@@ -10,14 +10,15 @@ class UserTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UsersCubit, UsersState>(
       builder: (context, state) {
+        final users = state.users;
+
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: state.users.map((u) {
+          children: users.map((u) {
             bool isActive = state.currentUser?.name == u.name;
 
             return Padding(
               padding: const EdgeInsets.all(4.0),
-
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: isActive
@@ -31,7 +32,7 @@ class UserTabs extends StatelessWidget {
                 onPressed: () {
                   context.read<UsersCubit>().selectUser(u);
                 },
-                child: Text(u.name),
+                child: Text(u.name.toUpperCase()),
               ),
             );
           }).toList(),

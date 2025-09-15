@@ -15,8 +15,8 @@ class Author {
     );
   }
 
+  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'rating': rating};
+
   @override
-  String toString() {
-    return jsonEncode({'id': id, 'name': name, 'rating': rating});
-  }
+  String toString() => jsonEncode(toJson());
 }
