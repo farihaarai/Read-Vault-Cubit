@@ -8,6 +8,10 @@ class User {
 
   const User({required this.name, required this.books});
 
+  User copywith({String? name, List<Book>? books}) {
+    return User(name: name ?? this.name, books: books ?? this.books);
+  }
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'books': books.map((b) => b.toJson()).toList(),

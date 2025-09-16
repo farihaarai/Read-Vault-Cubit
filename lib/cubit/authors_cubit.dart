@@ -1,8 +1,11 @@
 import 'package:book_library_cubit/cubit/authors_state.dart';
+import 'package:book_library_cubit/cubit/users_cubit.dart';
 import 'package:book_library_cubit/models/author.dart';
+import 'package:book_library_cubit/models/book.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthorsCubit extends Cubit<AuthorsState> {
+  // final UsersCubit usersCubit;
   AuthorsCubit() : super(AuthorsState()) {
     final authors = [
       Author(id: 1, name: "Elly Griffiths", rating: 4),
@@ -22,4 +25,13 @@ class AuthorsCubit extends Cubit<AuthorsState> {
   void selectAuthor(int id) {
     emit(state.copyWith(selectedAuthorId: id));
   }
+
+  // List<Book> getBooksByAuthor(String query) {
+  //   final currentUser = usersCubit.state.currentUser;
+  //   if (currentUser == null) return [];
+
+  //   return currentUser.books
+  //       .where((b) => b.author.name.toLowerCase().contains(query.toLowerCase()))
+  //       .toList();
+  // }
 }

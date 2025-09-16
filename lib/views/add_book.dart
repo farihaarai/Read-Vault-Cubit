@@ -14,8 +14,8 @@ class AddBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _authorCubit = context.read<AuthorsCubit>();
-    final _userCubit = context.read<UsersCubit>();
+    final authorCubit = context.read<AuthorsCubit>();
+    final userCubit = context.read<UsersCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add a new Book"),
@@ -104,7 +104,7 @@ class AddBook extends StatelessWidget {
                 onPressed: () {
                   if (idController.text.isEmpty ||
                       nameController.text.isEmpty ||
-                      _authorCubit.state.selectedAuthorId == 0 ||
+                      authorCubit.state.selectedAuthorId == 0 ||
                       descController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -118,8 +118,8 @@ class AddBook extends StatelessWidget {
                     );
                     return;
                   }
-                  final selectedAuthor = _authorCubit.state.authors.firstWhere(
-                    (a) => a.id == _authorCubit.state.selectedAuthorId,
+                  final selectedAuthor = authorCubit.state.authors.firstWhere(
+                    (a) => a.id == authorCubit.state.selectedAuthorId,
                   );
 
                   final book = Book(
@@ -128,7 +128,7 @@ class AddBook extends StatelessWidget {
                     author: selectedAuthor,
                     description: descController.text,
                   );
-                  _userCubit.addBook(book);
+                  userCubit.addBook(book);
                   Navigator.pop(context);
                 },
                 child: const Text(

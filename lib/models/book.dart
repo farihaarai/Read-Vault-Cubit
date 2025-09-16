@@ -17,6 +17,22 @@ class Book {
     this.isFavorite = false,
   });
 
+  Book copywith({
+    int? id,
+    String? name,
+    Author? author,
+    String? description,
+    bool? isFavorite,
+  }) {
+    return Book(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      author: author ?? this.author,
+      description: description ?? this.description,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
+
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,

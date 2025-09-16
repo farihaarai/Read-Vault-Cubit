@@ -12,27 +12,31 @@ class UsersCubit extends Cubit<UsersState> {
         books: [
           Book(
             id: 1,
-            name: "abc",
+            name: "The Last Mile",
             author: Author(id: 4, name: "David Baldacci", rating: 1),
-            description: "fgxdjhvfjv",
+            description:
+                "An Amos Decker thriller about memory, murder, and justice.",
           ),
           Book(
             id: 2,
-            name: "qwe",
+            name: "The Night Hawks",
             author: Author(id: 1, name: "Elly Griffiths", rating: 4),
-            description: "fgxdjhvfjv",
+            description:
+                "A Ruth Galloway mystery involving an archaeological dig and a murder.",
           ),
           Book(
             id: 3,
-            name: "asd",
+            name: "Pretty Girls",
             author: Author(id: 10, name: "Karin Slaughter", rating: 3),
-            description: "fgxdjhvfjv",
+            description:
+                "A psychological thriller that unravels dark family secrets.",
           ),
           Book(
             id: 4,
-            name: "pqr",
+            name: "The Seven Sisters",
             author: Author(id: 8, name: "Lucinda Riley", rating: 2),
-            description: "fgxdjhvfjv",
+            description:
+                "The first book in the epic Seven Sisters series about love and family.",
           ),
         ],
       ),
@@ -41,27 +45,31 @@ class UsersCubit extends Cubit<UsersState> {
         books: [
           Book(
             id: 5,
-            name: "32132",
+            name: "Memory Man",
             author: Author(id: 4, name: "David Baldacci", rating: 1),
-            description: "fgxdjhvfjv",
+            description:
+                "The first Amos Decker novel about a detective who never forgets.",
           ),
           Book(
             id: 6,
-            name: "154",
+            name: "The Lantern Men",
             author: Author(id: 1, name: "Elly Griffiths", rating: 4),
-            description: "fgxdjhvfjv",
+            description:
+                "A Ruth Galloway mystery tied to folklore and serial killings.",
           ),
           Book(
             id: 7,
-            name: "85756",
+            name: "The Good Daughter",
             author: Author(id: 10, name: "Karin Slaughter", rating: 3),
-            description: "fgxdjhvfjv",
+            description:
+                "A powerful story of two sisters bound by a violent tragedy.",
           ),
           Book(
             id: 8,
-            name: "78746",
+            name: "The Shadow Sister",
             author: Author(id: 8, name: "Lucinda Riley", rating: 2),
-            description: "fgxdjhvfjv",
+            description:
+                "The third book in the Seven Sisters series about family and secrets.",
           ),
         ],
       ),
@@ -85,11 +93,73 @@ class UsersCubit extends Cubit<UsersState> {
   // ------------------------ Book Management ------------------------ //
 
   void addBook(Book book) {
-    // final currentUser = state.currentUser;
     if (state.currentUser == null) return;
-    final updatedUser = state.copywith(
-      books: [...state.currentUser!.books, book],
-    );
-    emit(updatedUser);
+    final updatedBooks = [...state.currentUser!.books, book];
+    final updatedUser = state.currentUser!.copywith(books: updatedBooks);
+    final updatedUsers = state.users
+        .map((u) => u.name == updatedUser.name ? updatedUser : u)
+        .toList();
+    emit(state.copywith(currentUser: updatedUser, users: updatedUsers));
+  }
+
+  void toggleFavorite(Book book) {
+    if (state.currentUser == null) return;
+    final updatedBooks = state.currentUser!.books.map((b) {
+      if (b.id == book.id) {
+        return b.copywith(isFavorite: !b.isFavorite);
+      }
+      return b;
+    }).toList();
+    final updatedUser = state.currentUser!.copywith(books: updatedBooks);
+    final updatedUsers = state.users
+        .map((u) => u.name == updatedUser.name ? updatedUser : u)
+        .toList();
+    emit(state.copywith(currentUser: updatedUser, users: updatedUsers));
+  }
+
+  void deleteBook(Book book) {
+    if (state.currentUser == null) return;
+    final updatedBooks = state.currentUser!.books
+        .where((b) => b.id != book.id)
+        .toList();
+    final updatedUser = state.currentUser!.copywith(books: updatedBooks);
+    final updatedUsers = state.users
+        .map((u) => u.name == updatedUser.name ? updatedUser : u)
+        .toList();
+    emit(state.copywith(currentUser: updatedUser, users: updatedUsers));
+  }
+
+  List<Book> getFavBoooks() {
+    if (state.currentUser == null) return [];
+    return state.currentUser!.books.where((b) => b.isFavorite).toList();
+  }
+
+  List<Book> getFilteredBooks() {
+    if (state.currentUser == null) return [];
+    List<Book> list = state.currentUser!.books;
+
+    if (state.filter == "favorite") {
+      return list.where((b) => b.isFavorite).toList();
+    }
+    if (state.filter == "author" && state.query.isNotEmpty) {
+      return list
+          .where(
+            (b) =>
+                b.author.name.toLowerCase().contains(state.query.toLowerCase()),
+          )
+          .toList();
+    }
+    return list;
+  }
+
+  // ------------------------ Author Search ------------------------ //
+  List<Book> getBooksByAuthor(String authorName) {
+    if (state.currentUser == null) return [];
+
+    return state.currentUser!.books
+        .where(
+          (b) => b.author.name.toLowerCase().contains(authorName.toLowerCase()),
+        )
+        .toList();
   }
 }
