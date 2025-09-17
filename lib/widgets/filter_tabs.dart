@@ -1,7 +1,9 @@
+import 'package:book_library_cubit/models/enums/books_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/users_cubit.dart';
-import '../states/users_state.dart';
+import '../models/states/users_state.dart';
 
 class FilterTabs extends StatelessWidget {
   const FilterTabs({super.key});
@@ -10,11 +12,11 @@ class FilterTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UsersCubit, UsersState>(
       builder: (context, state) {
-        final filters = ["all", "author", "favorite"];
+        final List<BookListFilters> filters = BookListFilters.values;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: filters.map((f) {
+          children: filters.map((BookListFilters f) {
             bool isActive = state.filter == f;
 
             return Padding(
@@ -29,10 +31,24 @@ class FilterTabs extends StatelessWidget {
                     borderRadius: BorderRadius.zero,
                   ),
                 ),
+                // onPressed: () {
+                //   if (f == 'all') {
+                //     context.go('/');
+                //   } else {
+                //     context.go('/$f');
+                //   }
+                //   context.read<UsersCubit>().setFilter(f);
+                // },
                 onPressed: () {
-                  context.read<UsersCubit>().setFilter(f);
+                  final uri = Uri(
+                    path: '/',
+                    queryParameters: f != BookListFilters.all
+                        ? {'filter': f.name}
+                        : null,
+                  );
+                  context.go(uri.toString());
                 },
-                child: Text(f.toUpperCase()),
+                child: Text(f.name.toUpperCase()),
               ),
             );
           }).toList(),

@@ -1,5 +1,5 @@
 import 'package:book_library_cubit/cubit/users_cubit.dart';
-import 'package:book_library_cubit/states/users_state.dart';
+import 'package:book_library_cubit/models/states/users_state.dart';
 import 'package:book_library_cubit/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

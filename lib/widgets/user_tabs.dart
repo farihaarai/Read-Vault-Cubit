@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/users_cubit.dart';
-import '../states/users_state.dart';
+import '../models/states/users_state.dart';
 
 class UserTabs extends StatelessWidget {
   const UserTabs({super.key});

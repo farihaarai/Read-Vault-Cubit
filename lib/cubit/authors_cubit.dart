@@ -1,4 +1,4 @@
-import 'package:book_library_cubit/states/authors_state.dart';
+import 'package:book_library_cubit/models/states/authors_state.dart';
 import 'package:book_library_cubit/models/author.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
