@@ -1,5 +1,5 @@
 import 'package:book_library_cubit/cubit/users_cubit.dart';
-import 'package:book_library_cubit/cubit/users_state.dart';
+import 'package:book_library_cubit/states/users_state.dart';
 import 'package:book_library_cubit/views/add_book.dart';
 import 'package:book_library_cubit/widgets/book_list.dart';
 import 'package:book_library_cubit/widgets/filter_tabs.dart';
@@ -91,6 +91,7 @@ class HomePage extends StatelessWidget {
                                 );
                                 context.read<UsersCubit>().setQuery(query);
                               }
+                              // queryController.clear();
                             },
                             child: const Icon(Icons.search),
                           ),

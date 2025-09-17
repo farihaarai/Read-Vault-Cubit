@@ -1,7 +1,11 @@
-import 'dart:convert';
-
 import 'package:book_library_cubit/models/author.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:copy_with_extension/copy_with_extension.dart';
 
+part 'book.g.dart';
+
+@JsonSerializable()
+@CopyWith()
 class Book {
   final int id;
   final String name;
@@ -16,31 +20,7 @@ class Book {
     required this.description,
     this.isFavorite = false,
   });
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
 
-  Book copywith({
-    int? id,
-    String? name,
-    Author? author,
-    String? description,
-    bool? isFavorite,
-  }) {
-    return Book(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      author: author ?? this.author,
-      description: description ?? this.description,
-      isFavorite: isFavorite ?? this.isFavorite,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'author': author.toJson(),
-    'description': description,
-    'isFavorite': isFavorite,
-  };
-
-  @override
-  String toString() => jsonEncode(toJson());
+  Map<String, dynamic> toJson() => _$BookToJson(this);
 }
