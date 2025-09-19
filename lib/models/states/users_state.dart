@@ -12,6 +12,7 @@ class UsersState {
   final BookListFilters filter;
   final String query;
   final List<Book> books;
+  final List<Book> favBooks;
 
   const UsersState({
     this.users = const [],
@@ -19,10 +20,11 @@ class UsersState {
     this.filter = BookListFilters.all,
     this.query = "",
     this.books = const [],
+    this.favBooks = const [],
   });
 
   @override
   String toString() {
-    return 'UsersState(users: $users, currentUser: $currentUser, filter: $filter, query: $query, books: $books)';
+    return 'UsersState(users: $users, currentUser: $currentUser, filter: $filter, query: $query, books: $books, favBooks: $favBooks)';
   }
 }

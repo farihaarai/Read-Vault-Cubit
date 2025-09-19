@@ -4,6 +4,7 @@ import 'package:book_library_cubit/cubit/users_cubit.dart';
 import 'package:book_library_cubit/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AddBook extends StatelessWidget {
   AddBook({super.key});
@@ -129,7 +130,7 @@ class AddBook extends StatelessWidget {
                     description: descController.text,
                   );
                   userCubit.addBook(book);
-                  Navigator.pop(context);
+                  context.go('/');
                 },
                 child: const Text(
                   "Add Book",

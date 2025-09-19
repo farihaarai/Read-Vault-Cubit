@@ -39,7 +39,13 @@ class FilterTabs extends StatelessWidget {
                 //   }
                 //   context.read<UsersCubit>().setFilter(f);
                 // },
-                onPressed: () {
+                onPressed: () async {
+                  final cubit = context.read<UsersCubit>();
+
+                  // If user selects favorite filter, load favorites first
+                  if (f == BookListFilters.favorite) {
+                    await cubit.loadFavoriteBooks();
+                  }
                   final uri = Uri(
                     path: '/',
                     queryParameters: f != BookListFilters.all

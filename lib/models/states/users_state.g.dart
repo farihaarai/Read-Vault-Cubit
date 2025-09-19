@@ -17,6 +17,8 @@ abstract class _$UsersStateCWProxy {
 
   UsersState books(List<Book> books);
 
+  UsersState favBooks(List<Book> favBooks);
+
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `UsersState(...).copyWith.fieldName(value)`.
   ///
@@ -30,6 +32,7 @@ abstract class _$UsersStateCWProxy {
     BookListFilters filter,
     String query,
     List<Book> books,
+    List<Book> favBooks,
   });
 }
 
@@ -56,6 +59,9 @@ class _$UsersStateCWProxyImpl implements _$UsersStateCWProxy {
   UsersState books(List<Book> books) => call(books: books);
 
   @override
+  UsersState favBooks(List<Book> favBooks) => call(favBooks: favBooks);
+
+  @override
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `UsersState(...).copyWith.fieldName(value)`.
   ///
@@ -69,6 +75,7 @@ class _$UsersStateCWProxyImpl implements _$UsersStateCWProxy {
     Object? filter = const $CopyWithPlaceholder(),
     Object? query = const $CopyWithPlaceholder(),
     Object? books = const $CopyWithPlaceholder(),
+    Object? favBooks = const $CopyWithPlaceholder(),
   }) {
     return UsersState(
       users: users == const $CopyWithPlaceholder() || users == null
@@ -91,6 +98,10 @@ class _$UsersStateCWProxyImpl implements _$UsersStateCWProxy {
           ? _value.books
           // ignore: cast_nullable_to_non_nullable
           : books as List<Book>,
+      favBooks: favBooks == const $CopyWithPlaceholder() || favBooks == null
+          ? _value.favBooks
+          // ignore: cast_nullable_to_non_nullable
+          : favBooks as List<Book>,
     );
   }
 }

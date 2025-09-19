@@ -9,8 +9,13 @@ part 'user.g.dart';
 class User {
   final String name;
   final List<Book> books;
+  final List<Book> favBooks;
 
-  const User({required this.name, required this.books});
+  const User({
+    required this.name,
+    this.books = const [],
+    this.favBooks = const [],
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

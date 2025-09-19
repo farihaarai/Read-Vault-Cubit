@@ -11,6 +11,8 @@ abstract class _$UserCWProxy {
 
   User books(List<Book> books);
 
+  User favBooks(List<Book> favBooks);
+
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `User(...).copyWith.fieldName(value)`.
   ///
@@ -18,7 +20,7 @@ abstract class _$UserCWProxy {
   /// ```dart
   /// User(...).copyWith(id: 12, name: "My name")
   /// ```
-  User call({String name, List<Book> books});
+  User call({String name, List<Book> books, List<Book> favBooks});
 }
 
 /// Callable proxy for `copyWith` functionality.
@@ -35,6 +37,9 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
   User books(List<Book> books) => call(books: books);
 
   @override
+  User favBooks(List<Book> favBooks) => call(favBooks: favBooks);
+
+  @override
   /// Creates a new instance with the provided field values.
   /// Passing `null` to a nullable field nullifies it, while `null` for a non-nullable field is ignored. To update a single field use `User(...).copyWith.fieldName(value)`.
   ///
@@ -45,6 +50,7 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
   User call({
     Object? name = const $CopyWithPlaceholder(),
     Object? books = const $CopyWithPlaceholder(),
+    Object? favBooks = const $CopyWithPlaceholder(),
   }) {
     return User(
       name: name == const $CopyWithPlaceholder() || name == null
@@ -55,6 +61,10 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
           ? _value.books
           // ignore: cast_nullable_to_non_nullable
           : books as List<Book>,
+      favBooks: favBooks == const $CopyWithPlaceholder() || favBooks == null
+          ? _value.favBooks
+          // ignore: cast_nullable_to_non_nullable
+          : favBooks as List<Book>,
     );
   }
 }
@@ -72,12 +82,20 @@ extension $UserCopyWith on User {
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
   name: json['name'] as String,
-  books: (json['books'] as List<dynamic>)
-      .map((e) => Book.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  books:
+      (json['books'] as List<dynamic>?)
+          ?.map((e) => Book.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  favBooks:
+      (json['favBooks'] as List<dynamic>?)
+          ?.map((e) => Book.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'name': instance.name,
   'books': instance.books,
+  'favBooks': instance.favBooks,
 };
